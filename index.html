@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Cavalo - Galope Livre</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      background: linear-gradient(to bottom, #a8d0e6, #374785);
+      color: #fff;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    header {
+      text-align: center;
+      padding: 60px 20px 40px;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.4), transparent);
+    }
+
+    h1 {
+      font-size: 4.2rem;
+      text-shadow: 0 4px 12px rgba(0,0,0,0.6);
+      margin-bottom: 10px;
+      letter-spacing: 2px;
+    }
+
+    .subtitle {
+      font-size: 1.4rem;
+      opacity: 0.9;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .horse-container {
+      position: relative;
+      height: 60vh;
+      min-height: 400px;
+      margin: 30px auto;
+      max-width: 1100px;
+      perspective: 1200px;
+    }
+
+    .horse {
+      position: absolute;
+      bottom: 10%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 380px;
+      height: 280px;
+      animation: galope 3.2s infinite ease-in-out;
+    }
+
+    @keyframes galope {
+      0%, 100% { transform: translateX(-50%) translateY(0) rotateY(10deg); }
+      25%  { transform: translateX(-48%) translateY(-8px) rotateY(8deg); }
+      50%  { transform: translateX(-52%) translateY(0) rotateY(-5deg); }
+      75%  { transform: translateX(-50%) translateY(-10px) rotateY(5deg); }
+    }
+
+    .horse svg {
+      width: 100%;
+      height: 100%;
+      filter: drop-shadow(0 15px 25px rgba(0,0,0,0.7));
+    }
+
+    .info-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 25px;
+      max-width: 1100px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+
+    .card {
+      background: rgba(255,255,255,0.12);
+      backdrop-filter: blur(10px);
+      border-radius: 16px;
+      padding: 28px;
+      border: 1px solid rgba(255,255,255,0.18);
+      transition: all 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-10px);
+      background: rgba(255,255,255,0.18);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+    }
+
+    .card h2 {
+      color: #ffd60a;
+      margin-bottom: 14px;
+      font-size: 1.6rem;
+    }
+
+    .grass {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 180px;
+      background: linear-gradient(to top, #1e3a2f, #2e5c47);
+      z-index: -1;
+    }
+
+    .grass::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(
+        45deg,
+        #2e5c47,
+        #2e5c47 20px,
+        #3a725c 20px,
+        #3a725c 40px
+      );
+      opacity: 0.4;
+    }
+
+    @media (max-width: 700px) {
+      h1 { font-size: 3.2rem; }
+      .horse { width: 300px; height: 220px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="grass"></div>
+
+  <header>
+    <h1>Cavalo</h1>
+    <p class="subtitle">Símbolo de força, liberdade e elegância</p>
+  </header>
+
+  <div class="horse-container">
+    <div class="horse">
+      <!-- Silhueta simples de cavalo galopando (SVG) -->
+      <svg viewBox="0 0 500 400" fill="none" stroke="#000" stroke-width="12" stroke-linecap="round" stroke-linejoin="round">
+        <!-- Corpo -->
+        <path d="M180 220 Q 240 140 320 180 Q 380 220 400 280" fill="#3c2f2f"/>
+        <!-- Pescoço e cabeça -->
+        <path d="M180 220 Q 120 160 90 100 Q 70 60 100 40 Q 130 30 160 60 Q 180 90 200 140" fill="#2e1f1f"/>
+        <!-- Orelha -->
+        <path d="M130 50 L 120 20 L 150 40 Z" fill="#2e1f1f"/>
+        <!-- Juba -->
+        <path d="M160 80 Q 100 20 60 100 Q 40 140 80 160" fill="none" stroke="#1a0f0f" stroke-width="18"/>
+        <path d="M180 100 Q 130 40 90 110" fill="none" stroke="#1a0f0f" stroke-width="16"/>
+        <!-- Cauda -->
+        <path d="M400 280 Q 460 340 480 400 Q 500 460 460 480" fill="none" stroke="#1a0f0f" stroke-width="20"/>
+        <!-- Pernas dianteiras -->
+        <path d="M240 280 L 230 380" stroke="#222"/>
+        <path d="M280 280 L 290 380" stroke="#222"/>
+        <!-- Pernas traseiras -->
+        <path d="M340 280 L 320 400" stroke="#222"/>
+        <path d="M380 280 L 400 400" stroke="#222"/>
+      </svg>
+    </div>
+  </div>
+
+  <div class="info-cards">
+    <div class="card">
+      <h2>Velocidade</h2>
+      <p>Um cavalo Quarto de Milha pode atingir até <strong>70 km/h</strong> em distâncias curtas. Já os puros-sangue inglês chegam perto dos <strong>65–70 km/h</strong> em corridas de 1–2 km.</p>
+    </div>
+
+    <div class="card">
+      <h2>Memória</h2>
+      <p>Cavalos possuem excelente memória de longo prazo — podem lembrar pessoas, lugares e comandos mesmo depois de muitos anos sem contato.</p>
+    </div>
+
+    <div class="card">
+      <h2>Visão</h2>
+      <p>Possuem visão quase <strong>360°</strong> (exceto uma pequena área à frente do focinho e atrás da cauda), mas enxergam melhor movimentos do que detalhes.</p>
+    </div>
+
+    <div class="card">
+      <h2>Sono</h2>
+      <p>Dormem em média 3–4 horas por dia, podendo fazê-lo em pé graças ao "mecanismo de estay" nas patas. O sono REM (sonho) só ocorre deitado.</p>
+    </div>
+  </div>
+
+  <script>
+    // Pequeno efeito de "poeira" / movimento no fundo (opcional)
+    document.addEventListener('mousemove', (e) => {
+      const x = e.clientX / window.innerWidth * 100;
+      const y = e.clientY / window.innerHeight * 100;
+      
+      document.body.style.background = `linear-gradient(to bottom, 
+        hsl(210, 40%, ${40 + y*0.2}%), 
+        hsl(210, 35%, ${25 + y*0.1}%))`;
+    });
+  </script>
+
+</body>
+</html>
