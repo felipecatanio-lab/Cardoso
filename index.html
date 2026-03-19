@@ -1,203 +1,181 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Cavalo - Galope Livre</title>
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    body {
-      font-family: 'Segoe UI', system-ui, sans-serif;
-      background: linear-gradient(to bottom, #a8d0e6, #374785);
-      color: #fff;
-      min-height: 100vh;
-      overflow-x: hidden;
-    }
-
-    header {
-      text-align: center;
-      padding: 60px 20px 40px;
-      background: linear-gradient(to bottom, rgba(0,0,0,0.4), transparent);
-    }
-
-    h1 {
-      font-size: 4.2rem;
-      text-shadow: 0 4px 12px rgba(0,0,0,0.6);
-      margin-bottom: 10px;
-      letter-spacing: 2px;
-    }
-
-    .subtitle {
-      font-size: 1.4rem;
-      opacity: 0.9;
-      max-width: 600px;
-      margin: 0 auto;
-    }
-
-    .horse-container {
-      position: relative;
-      height: 60vh;
-      min-height: 400px;
-      margin: 30px auto;
-      max-width: 1100px;
-      perspective: 1200px;
-    }
-
-    .horse {
-      position: absolute;
-      bottom: 10%;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 380px;
-      height: 280px;
-      animation: galope 3.2s infinite ease-in-out;
-    }
-
-    @keyframes galope {
-      0%, 100% { transform: translateX(-50%) translateY(0) rotateY(10deg); }
-      25%  { transform: translateX(-48%) translateY(-8px) rotateY(8deg); }
-      50%  { transform: translateX(-52%) translateY(0) rotateY(-5deg); }
-      75%  { transform: translateX(-50%) translateY(-10px) rotateY(5deg); }
-    }
-
-    .horse svg {
-      width: 100%;
-      height: 100%;
-      filter: drop-shadow(0 15px 25px rgba(0,0,0,0.7));
-    }
-
-    .info-cards {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 25px;
-      max-width: 1100px;
-      margin: 40px auto;
-      padding: 0 20px;
-    }
-
-    .card {
-      background: rgba(255,255,255,0.12);
-      backdrop-filter: blur(10px);
-      border-radius: 16px;
-      padding: 28px;
-      border: 1px solid rgba(255,255,255,0.18);
-      transition: all 0.3s ease;
-    }
-
-    .card:hover {
-      transform: translateY(-10px);
-      background: rgba(255,255,255,0.18);
-      box-shadow: 0 20px 40px rgba(0,0,0,0.3);
-    }
-
-    .card h2 {
-      color: #ffd60a;
-      margin-bottom: 14px;
-      font-size: 1.6rem;
-    }
-
-    .grass {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      height: 180px;
-      background: linear-gradient(to top, #1e3a2f, #2e5c47);
-      z-index: -1;
-    }
-
-    .grass::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: repeating-linear-gradient(
-        45deg,
-        #2e5c47,
-        #2e5c47 20px,
-        #3a725c 20px,
-        #3a725c 40px
-      );
-      opacity: 0.4;
-    }
-
-    @media (max-width: 700px) {
-      h1 { font-size: 3.2rem; }
-      .horse { width: 300px; height: 220px; }
-    }
-  </style>
+<meta charset="UTF-8">
+<title>Mariozinho Básico</title>
+<style>
+  body { margin:0; background:#6b88ff; font-family:Arial; }
+  canvas { display:block; margin:20px auto; border:4px solid #000; background:#87CEEB; }
+  h1 { text-align:center; color:white; text-shadow:2px 2px 0 #000; }
+</style>
 </head>
 <body>
 
-  <div class="grass"></div>
+<h1>Mario Correndo (pressione ESPAÇO ou SETA ↑ para pular)</h1>
 
-  <header>
-    <h1>Cavalo</h1>
-    <p class="subtitle">Símbolo de força, liberdade e elegância</p>
-  </header>
+<canvas id="c" width="800" height="400"></canvas>
 
-  <div class="horse-container">
-    <div class="horse">
-      <!-- Silhueta simples de cavalo galopando (SVG) -->
-      <svg viewBox="0 0 500 400" fill="none" stroke="#000" stroke-width="12" stroke-linecap="round" stroke-linejoin="round">
-        <!-- Corpo -->
-        <path d="M180 220 Q 240 140 320 180 Q 380 220 400 280" fill="#3c2f2f"/>
-        <!-- Pescoço e cabeça -->
-        <path d="M180 220 Q 120 160 90 100 Q 70 60 100 40 Q 130 30 160 60 Q 180 90 200 140" fill="#2e1f1f"/>
-        <!-- Orelha -->
-        <path d="M130 50 L 120 20 L 150 40 Z" fill="#2e1f1f"/>
-        <!-- Juba -->
-        <path d="M160 80 Q 100 20 60 100 Q 40 140 80 160" fill="none" stroke="#1a0f0f" stroke-width="18"/>
-        <path d="M180 100 Q 130 40 90 110" fill="none" stroke="#1a0f0f" stroke-width="16"/>
-        <!-- Cauda -->
-        <path d="M400 280 Q 460 340 480 400 Q 500 460 460 480" fill="none" stroke="#1a0f0f" stroke-width="20"/>
-        <!-- Pernas dianteiras -->
-        <path d="M240 280 L 230 380" stroke="#222"/>
-        <path d="M280 280 L 290 380" stroke="#222"/>
-        <!-- Pernas traseiras -->
-        <path d="M340 280 L 320 400" stroke="#222"/>
-        <path d="M380 280 L 400 400" stroke="#222"/>
-      </svg>
-    </div>
-  </div>
+<script>
+// =============================================
+//      Mini Mario - Um arquivo só - 2025/26
+// =============================================
 
-  <div class="info-cards">
-    <div class="card">
-      <h2>Velocidade</h2>
-      <p>Um cavalo Quarto de Milha pode atingir até <strong>70 km/h</strong> em distâncias curtas. Já os puros-sangue inglês chegam perto dos <strong>65–70 km/h</strong> em corridas de 1–2 km.</p>
-    </div>
+const canvas = document.getElementById('c');
+const ctx = canvas.getContext('2d');
 
-    <div class="card">
-      <h2>Memória</h2>
-      <p>Cavalos possuem excelente memória de longo prazo — podem lembrar pessoas, lugares e comandos mesmo depois de muitos anos sem contato.</p>
-    </div>
+let mario = {
+  x: 100,
+  y: 280,
+  w: 34,
+  h: 48,
+  vy: 0,
+  pulando: false,
+  noChao: true
+};
 
-    <div class="card">
-      <h2>Visão</h2>
-      <p>Possuem visão quase <strong>360°</strong> (exceto uma pequena área à frente do focinho e atrás da cauda), mas enxergam melhor movimentos do que detalhes.</p>
-    </div>
+let chaoY = 320;
+let gravidade = 0.65;
+let forcaPulo = -13;
+let velocidade = 4;
 
-    <div class="card">
-      <h2>Sono</h2>
-      <p>Dormem em média 3–4 horas por dia, podendo fazê-lo em pé graças ao "mecanismo de estay" nas patas. O sono REM (sonho) só ocorre deitado.</p>
-    </div>
-  </div>
+let keys = {};
+let cameraX = 0;
 
-  <script>
-    // Pequeno efeito de "poeira" / movimento no fundo (opcional)
-    document.addEventListener('mousemove', (e) => {
-      const x = e.clientX / window.innerWidth * 100;
-      const y = e.clientY / window.innerHeight * 100;
-      
-      document.body.style.background = `linear-gradient(to bottom, 
-        hsl(210, 40%, ${40 + y*0.2}%), 
-        hsl(210, 35%, ${25 + y*0.1}%))`;
-    });
-  </script>
+// ---------------- controles ----------------
+window.addEventListener('keydown', e => keys[e.code] = true);
+window.addEventListener('keyup',   e => keys[e.code] = false);
 
+// ---------------- loop principal ----------------
+function loop() {
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+
+  // Movimento horizontal
+  if (keys['ArrowRight'] || keys['KeyD']) {
+    mario.x += velocidade;
+  }
+  if (keys['ArrowLeft'] || keys['KeyA']) {
+    mario.x -= velocidade;
+  }
+
+  // Pulo
+  if ((keys['Space'] || keys['ArrowUp']) && mario.noChao) {
+    mario.vy = forcaPulo;
+    mario.pulando = true;
+    mario.noChao = false;
+  }
+
+  // Física do pulo e gravidade
+  mario.vy += gravidade;
+  mario.y += mario.vy;
+
+  // Colisão com o chão
+  if (mario.y + mario.h >= chaoY) {
+    mario.y = chaoY - mario.h;
+    mario.vy = 0;
+    mario.noChao = true;
+    mario.pulando = false;
+  }
+
+  // Câmera segue o Mario (quando vai pra direita)
+  if (mario.x > cameraX + canvas.width * 0.6) {
+    cameraX = mario.x - canvas.width * 0.6;
+  }
+  if (mario.x < cameraX + canvas.width * 0.3) {
+    cameraX = mario.x - canvas.width * 0.3;
+  }
+  cameraX = Math.max(0, cameraX);
+
+  // ---------------- Desenhar cenário simples ----------------
+  // Céu já está no background do canvas
+  // Montanhas distantes
+  ctx.fillStyle = "#5a7dd4";
+  ctx.beginPath();
+  ctx.moveTo( -cameraX*0.3 + 200, 180);
+  ctx.lineTo( -cameraX*0.3 + 400, 60);
+  ctx.lineTo( -cameraX*0.3 + 600, 180);
+  ctx.lineTo( -cameraX*0.3 + 200, 180);
+  ctx.fill();
+
+  ctx.fillStyle = "#4a6bb5";
+  ctx.beginPath();
+  ctx.moveTo( -cameraX*0.4 + 500, 220);
+  ctx.lineTo( -cameraX*0.4 + 700, 100);
+  ctx.lineTo( -cameraX*0.4 + 900, 220);
+  ctx.fill();
+
+  // Chão / grama
+  ctx.fillStyle = "#6ebd47";
+  ctx.fillRect(0, chaoY, canvas.width, canvas.height - chaoY);
+
+  // Terra embaixo da grama
+  ctx.fillStyle = "#8b5a2b";
+  ctx.fillRect(0, chaoY + 8, canvas.width, canvas.height - chaoY - 8);
+
+  // Nuvens fofas
+  ctx.fillStyle = "white";
+  ctx.globalAlpha = 0.9;
+  desenharNuvem(-cameraX*0.1 + 120, 60);
+  desenharNuvem(-cameraX*0.1 + 550, 90);
+  desenharNuvem(-cameraX*0.1 + 880, 45);
+  ctx.globalAlpha = 1;
+
+  function desenharNuvem(x, y) {
+    ctx.beginPath();
+    ctx.arc(x+30, y+20, 35, 0, Math.PI*2);
+    ctx.arc(x+70, y+20, 45, 0, Math.PI*2);
+    ctx.arc(x+110,y+20, 35, 0, Math.PI*2);
+    ctx.fill();
+  }
+
+  // ---------------- Desenhar Mario ----------------
+  ctx.save();
+  ctx.translate(mario.x - cameraX, mario.y);
+
+  // Corpo (macacão vermelho)
+  ctx.fillStyle = "#e60000";
+  ctx.fillRect(-17, 10, 34, 30);
+
+  // Rosto / pele
+  ctx.fillStyle = "#ffcc99";
+  ctx.beginPath();
+  ctx.arc(0, 0, 14, 0, Math.PI*2);
+  ctx.fill();
+
+  // Boné vermelho
+  ctx.fillStyle = "#e60000";
+  ctx.fillRect(-16, -18, 32, 12);
+  ctx.fillStyle = "#fff";
+  ctx.fillRect(-10, -14, 20, 6);
+
+  // Olhos
+  ctx.fillStyle = "#000";
+  ctx.beginPath();
+  ctx.arc(-5, -3, 3, 0, Math.PI*2);
+  ctx.arc( 5, -3, 3, 0, Math.PI*2);
+  ctx.fill();
+
+  // Bigode
+  ctx.strokeStyle = "#000";
+  ctx.lineWidth = 3;
+  ctx.beginPath();
+  ctx.moveTo(-10, 5);  ctx.lineTo(-2, 7);
+  ctx.moveTo( 10, 5);  ctx.lineTo( 2, 7);
+  ctx.stroke();
+
+  // Botões do macacão
+  ctx.fillStyle = "#ffff00";
+  ctx.beginPath();
+  ctx.arc(-8, 22, 4, 0, Math.PI*2);
+  ctx.arc( 8, 22, 4, 0, Math.PI*2);
+  ctx.fill();
+
+  ctx.restore();
+
+  requestAnimationFrame(loop);
+}
+
+loop();
+
+</script>
 </body>
 </html>
