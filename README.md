@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<title>Mariozinho Básico</title>
+<style>
+  body { margin:0; background:#6b88ff; font-family:Arial; }
+  canvas { display:block; margin:20px auto; border:4px solid #000; background:#87CEEB; }
+  h1 { text-align:center; color:white; text-shadow:2px 2px 0 #000; }
+</style>
+</head>
+<body>
+
+<h1>Mario Correndo (pressione ESPAÇO ou SETA ↑ para pular)</h1>
+
+<canvas id="c" width="800" height="400"></canvas>
+
+<script>
+// =============================================
+//      Mini Mario - Um arquivo só - 2025/26
+// =============================================
+
+const canvas = document.getElementById('c');
+const ctx = canvas.getContext('2d');
+
+let mario = {
+  x: 100,
+  y: 280,
+  w: 34,
+  h: 48,
+  vy: 0,
+  pulando: false,
+  noChao: true
+};
+
+let chaoY = 320;
+let gravidade = 0.65;
+let forcaPulo = -13;
+let velocidade = 4;
+
+let keys = {};
+let cameraX = 0;
+
+// ---------------- controles ----------------
+window.addEventListener('keydown', e => keys[e.code] = true);
+window.addEventListener('keyup',   e => keys[e.code] = false);
+
+// ---------------- loop principal ----------------
+function loop() {
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+
+  // Movimento horizontal
+  if (keys['ArrowRight'] || keys['KeyD']) {
+    mario.x += velocidade;
+  }
+  if (keys['ArrowLeft'] || keys['KeyA']) {
+    mario.x -= velocidade;
+  }
+
+  // Pulo
+  if ((keys['Space'] || keys['ArrowUp']) && mario.noChao) {
+    mario.vy = forcaPulo;
+    mario.pulando = true;
+    mario.noChao = false;
+  }
+
+  // Física do pulo e gravidade
+  mario.vy += gravidade;
+  mario.y += mario.vy;
+
+  // Colisão com o chão
+  if (mario.y + mario.h >= chaoY) {
+    mario.y = chaoY - mario.h;
+    mario.vy = 0;
+    mario.noChao = true;
+    mario.pulando = false;
+  }
+
+  // Câmera segue o Mario (quando vai pra direita)
+  if (mario.x > cameraX + canvas.width * 0.6) {
+    cameraX = mario.x - canvas.width * 0.6;
+  }
+  if (mario.x < cameraX + canvas.width * 0.3) {
+    cameraX = mario.x - canvas.width * 0.3;
+  }
+  cameraX = Math.max(0, cameraX);
+
+  // ---------------- Desenhar cenário simples ----------------
+  // Céu já está no background do canvas
+  // Montanhas distantes
+  ctx.fillStyle = "#5a7dd4";
+  ctx.beginPath();
+  ctx.moveTo( -cameraX*0.3 + 200, 180);
+  ctx.lineTo( -cameraX*0.3 + 400, 60);
+  ctx.lineTo( -cameraX*0.3 + 600, 180);
+  ctx.lineTo( -cameraX*0.3 + 200, 180);
+  ctx.fill();
+
+  ctx.fillStyle = "#4a6bb5";
+  ctx.beginPath();
+  ctx.moveTo( -cameraX*0.4 + 500, 220);
+  ctx.lineTo( -cameraX*0.4 + 700, 100);
+  ctx.lineTo( -cameraX*0.4 + 900, 220);
+  ctx.fill();
+
+  // Chão / grama
+  ctx.fillStyle = "#6ebd47";
+  ctx.fillRect(0, chaoY, canvas.width, canvas.height - chaoY);
+
+  // Terra embaixo da grama
+  ctx.fillStyle = "#8b5a2b";
+  ctx.fillRect(0, chaoY + 8, canvas.width, canvas.height - chaoY - 8);
+
+  // Nuvens fofas
+  ctx.fillStyle = "white";
+  ctx.globalAlpha = 0.9;
+  desenharNuvem(-cameraX*0.1 + 120, 60);
+  desenharNuvem(-cameraX*0.1 + 550, 90);
+  desenharNuvem(-cameraX*0.1 + 880, 45);
+  ctx.globalAlpha = 1;
+
+  function desenharNuvem(x, y) {
+    ctx.beginPath();
+    ctx.arc(x+30, y+20, 35, 0, Math.PI*2);
+    ctx.arc(x+70, y+20, 45, 0, Math.PI*2);
+    ctx.arc(x+110,y+20, 35, 0, Math.PI*2);
+    ctx.fill();
+  }
+
+  // ---------------- Desenhar Mario ----------------
+  ctx.save();
+  ctx.translate(mario.x - cameraX, mario.y);
+
+  // Corpo (macacão vermelho)
+  ctx.fillStyle = "#e60000";
+  ctx.fillRect(-17, 10, 34, 30);
+
+  // Rosto / pele
+  ctx.fillStyle = "#ffcc99";
+  ctx.beginPath();
+  ctx.arc(0, 0, 14, 0, Math.PI*2);
+  ctx.fill();
+
+  // Boné vermelho
+  ctx.fillStyle = "#e60000";
+  ctx.fillRect(-16, -18, 32, 12);
+  ctx.fillStyle = "#fff";
+  ctx.fillRect(-10, -14, 20, 6);
+
+  // Olhos
+  ctx.fillStyle = "#000";
+  ctx.beginPath();
+  ctx.arc(-5, -3, 3, 0, Math.PI*2);
+  ctx.arc( 5, -3, 3, 0, Math.PI*2);
+  ctx.fill();
+
+  // Bigode
+  ctx.strokeStyle = "#000";
+  ctx.lineWidth = 3;
+  ctx.beginPath();
+  ctx.moveTo(-10, 5);  ctx.lineTo(-2, 7);
+  ctx.moveTo( 10, 5);  ctx.lineTo( 2, 7);
+  ctx.stroke();
+
+  // Botões do macacão
+  ctx.fillStyle = "#ffff00";
+  ctx.beginPath();
+  ctx.arc(-8, 22, 4, 0, Math.PI*2);
+  ctx.arc( 8, 22, 4, 0, Math.PI*2);
+  ctx.fill();
+
+  ctx.restore();
+
+  requestAnimationFrame(loop);
+}
+
+loop();
+
+</script>
+</body>
+</html>
