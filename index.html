@@ -2,201 +2,217 @@
 <html lang="pt-br">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Tênis Nike Realista - CSS 3D</title>
+  <title>Nissan GT-R Roxo</title>
   <style>
     body {
-      height: 100vh;
       margin: 0;
-      background: radial-gradient(circle at 50% 30%, #222 0%, #000 70%);
-      overflow: hidden;
-      font-family: Arial, sans-serif;
-    }
-
-    .scene {
-      width: 100%;
-      height: 100%;
-      perspective: 1200px;
+      height: 100vh;
+      background: #0d001a;
       display: flex;
-      align-items: center;
       justify-content: center;
+      align-items: center;
+      font-family: Arial, Helvetica, sans-serif;
     }
-
-    .shoe-container {
-      position: relative;
-      width: 420px;
-      height: 280px;
-      transform-style: preserve-3d;
-      transform: rotateX(12deg) rotateY(-28deg) rotateZ(2deg);
-      animation: float 12s ease-in-out infinite;
+    canvas {
+      border: 1px solid #444;
+      background: #111;
+      box-shadow: 0 0 40px #7b2cbf88;
     }
-
-    @keyframes float {
-      0%,100% { transform: rotateX(12deg) rotateY(-28deg) rotateZ(2deg) translateY(0); }
-      50%     { transform: rotateX(14deg) rotateY(-32deg) rotateZ(1deg) translateY(-18px); }
-    }
-
-    .shoe {
+    h2 {
+      color: #d5aaff;
       position: absolute;
-      width: 100%;
-      height: 100%;
-      transform-style: preserve-3d;
-    }
-
-    .part {
-      position: absolute;
-      background: #f8f8f8;
-      border-radius: 18px;
-      box-shadow: 
-        inset 0 8px 14px rgba(255,255,255,0.7),
-        inset 0 -8px 14px rgba(0,0,0,0.25),
-        0 25px 50px rgba(0,0,0,0.6);
-      backface-visibility: hidden;
-    }
-
-    /* Solado */
-    .sole {
-      width: 380px;
-      height: 80px;
-      bottom: 0;
-      left: 20px;
-      background: linear-gradient(135deg, #222 0%, #111 50%, #000 100%);
-      border-radius: 40px 40px 18px 18px;
-      transform: rotateX(-4deg);
-      box-shadow: 0 30px 60px rgba(0,0,0,0.9);
-    }
-
-    .sole::before {
-      content: "";
-      position: absolute;
-      inset: 8px;
-      background: repeating-linear-gradient(45deg, #333 0, #333 8px, #222 8px, #222 16px);
-      border-radius: 12px;
-    }
-
-    /* Cabedal principal (branco) */
-    .upper {
-      width: 340px;
-      height: 180px;
-      bottom: 60px;
-      left: 40px;
-      background: linear-gradient(to bottom, #fff 0%, #f0f0f0 100%);
-      border-radius: 80px 100px 60px 40px;
-      transform: rotateX(8deg);
-    }
-
-    /* Swoosh lateral */
-    .swoosh {
-      position: absolute;
-      width: 260px;
-      height: 80px;
-      top: 60px;
-      left: 40px;
-      background: #000;
-      border-radius: 50%;
-      transform: rotate(-25deg) skewX(-8deg);
-      clip-path: polygon(0% 40%, 100% 0%, 100% 60%, 0% 100%);
-      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-    }
-
-    .swoosh.right {
-      left: auto;
-      right: 40px;
-      transform: rotate(25deg) skewX(8deg);
-    }
-
-    /* Bico do tênis */
-    .toe {
-      width: 140px;
-      height: 100px;
-      bottom: 80px;
-      left: 140px;
-      background: #eee;
-      border-radius: 60% 60% 40% 40%;
-      transform: rotateX(15deg);
-      box-shadow: inset 0 -10px 20px rgba(0,0,0,0.3);
-    }
-
-    /* Cadarços (simplificado) */
-    .laces {
-      position: absolute;
-      inset: 40px 80px;
-      background: repeating-linear-gradient(to right, 
-        transparent 0 12px, #ddd 12px 20px, transparent 20px 32px);
-      height: 8px;
-      border-radius: 4px;
-      transform: rotateX(30deg);
-    }
-
-    /* Iluminação ambiente giratória */
-    .light {
-      position: absolute;
-      width: 800px;
-      height: 800px;
-      background: radial-gradient(circle, rgba(255,240,180,0.15) 0%, transparent 60%);
-      top: -300px;
-      left: -200px;
-      pointer-events: none;
-      animation: lightRotate 20s linear infinite;
-      transform-style: preserve-3d;
-    }
-
-    @keyframes lightRotate {
-      to { transform: rotateY(360deg); }
-    }
-
-    h1 {
-      position: absolute;
-      bottom: 30px;
-      left: 50%;
-      transform: translateX(-50%);
-      color: #aaa;
-      font-size: 1.1rem;
-      letter-spacing: 4px;
-      text-transform: uppercase;
+      top: 30px;
+      text-shadow: 0 0 15px #a855f7;
     }
   </style>
 </head>
 <body>
 
-  <div class="scene">
-    <div class="shoe-container">
-      <div class="light"></div>
+<h2>Nissan GT-R (R35) – Roxo</h2>
 
-      <div class="shoe">
-        <div class="part sole"></div>
-        <div class="part upper"></div>
-        <div class="part toe"></div>
-        <div class="part swoosh"></div>
-        <div class="part swoosh right"></div>
-        <div class="part laces"></div>
-      </div>
-    </div>
-  </div>
+<canvas id="c" width="780" height="420"></canvas>
 
-  <h1>Air Force 1 — CSS & JavaScript</h1>
+<script>
+// Nissan GT-R roxo – versão estilizada 2D
+const canvas = document.getElementById('c');
+const ctx = canvas.getContext('2d');
 
-  <script>
-    // Leve movimento de mouse (opcional - mais realismo)
-    const container = document.querySelector('.shoe-container');
-    
-    document.addEventListener('mousemove', e => {
-      const xAxis = (window.innerWidth / 2 - e.pageX) / 25;
-      const yAxis = (window.innerHeight / 2 - e.pageY) / 25;
-      
-      container.style.transform = `
-        rotateX(${yAxis + 12}deg) 
-        rotateY(${xAxis - 28}deg) 
-        rotateZ(2deg)
-      `;
-    });
-    
-    // Volta à animação original quando mouse sai
-    document.addEventListener('mouseleave', () => {
-      container.style.transform = '';
-      container.style.transition = 'transform 0.5s';
-    });
-  </script>
+function drawGTR() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
 
+  // ------------------- sombra no chão -------------------
+  ctx.fillStyle = "rgba(0,0,0,0.7)";
+  ctx.beginPath();
+  ctx.ellipse(390, 375, 160, 35, 0, 0, Math.PI*2);
+  ctx.fill();
+
+  // Corpo principal (roxo metalizado)
+  ctx.fillStyle = "#7b2cbf";         // roxo principal
+  ctx.strokeStyle = "#4c1d95";
+  ctx.lineWidth = 3;
+
+  ctx.beginPath();
+  ctx.moveTo(120, 240);
+  ctx.quadraticCurveTo(80, 220, 60, 180);
+  ctx.lineTo(60, 140);
+  ctx.quadraticCurveTo(90, 90, 160, 70);
+  ctx.lineTo(620, 70);
+  ctx.quadraticCurveTo(690, 90, 720, 140);
+  ctx.lineTo(720, 180);
+  ctx.quadraticCurveTo(700, 220, 660, 240);
+  ctx.lineTo(120, 240);
+  ctx.closePath();
+  ctx.fill();
+  ctx.stroke();
+
+  // Reflexo brilhante no capô (efeito metal)
+  const grad = ctx.createLinearGradient(100, 80, 700, 220);
+  grad.addColorStop(0, "rgba(255,255,255,0.35)");
+  grad.addColorStop(0.4, "rgba(255,255,255,0.08)");
+  grad.addColorStop(0.6, "rgba(123,44,191,0.15)");
+  grad.addColorStop(1, "rgba(123,44,191,0.0)");
+
+  ctx.fillStyle = grad;
+  ctx.fill();
+
+  // ------------------- para-lamas dianteiros agressivos -------------------
+  ctx.fillStyle = "#6b21a8";
+  ctx.beginPath();
+  ctx.moveTo(100, 240);
+  ctx.lineTo(80, 280);
+  ctx.quadraticCurveTo(70, 310, 95, 335);
+  ctx.lineTo(180, 340);
+  ctx.lineTo(180, 240);
+  ctx.closePath();
+  ctx.fill();
+  ctx.stroke();
+
+  ctx.beginPath();
+  ctx.moveTo(680, 240);
+  ctx.lineTo(700, 280);
+  ctx.quadraticCurveTo(710, 310, 685, 335);
+  ctx.lineTo(600, 340);
+  ctx.lineTo(600, 240);
+  ctx.closePath();
+  ctx.fill();
+  ctx.stroke();
+
+  // ------------------- saias laterais -------------------
+  ctx.fillStyle = "#5b1890";
+  ctx.beginPath();
+  ctx.moveTo(180, 300);
+  ctx.lineTo(600, 300);
+  ctx.lineTo(620, 340);
+  ctx.lineTo(160, 340);
+  ctx.closePath();
+  ctx.fill();
+
+  // ------------------- rodas -------------------
+  function drawWheel(x, y) {
+    // pneu
+    ctx.fillStyle = "#111";
+    ctx.beginPath();
+    ctx.arc(x, y, 58, 0, Math.PI*2);
+    ctx.fill();
+    ctx.strokeStyle = "#222";
+    ctx.lineWidth = 14;
+    ctx.stroke();
+
+    // aro roxo brilhante
+    const wheelGrad = ctx.createRadialGradient(x-18, y-18, 5, x, y, 42);
+    wheelGrad.addColorStop(0, "#c084fc");
+    wheelGrad.addColorStop(0.7, "#7b2cbf");
+    wheelGrad.addColorStop(1, "#4c1d95");
+
+    ctx.fillStyle = wheelGrad;
+    ctx.beginPath();
+    ctx.arc(x, y, 42, 0, Math.PI*2);
+    ctx.fill();
+
+    // detalhes do aro
+    ctx.strokeStyle = "#e9d5ff";
+    ctx.lineWidth = 3;
+    ctx.beginPath();
+    ctx.arc(x, y, 30, 0, Math.PI*2);
+    ctx.stroke();
+
+    for(let i = 0; i < 10; i++){
+      let ang = i * Math.PI / 5;
+      ctx.beginPath();
+      ctx.moveTo(x + Math.cos(ang)*30, y + Math.sin(ang)*30);
+      ctx.lineTo(x + Math.cos(ang)*42, y + Math.sin(ang)*42);
+      ctx.stroke();
+    }
+  }
+
+  drawWheel(180, 300);  // dianteira esquerda
+  drawWheel(600, 300);  // dianteira direita
+  drawWheel(220, 300);  // traseira esquerda (um pouco mais pra trás)
+  drawWheel(560, 300);  // traseira direita
+
+  // ------------------- faróis dianteiros (LED) -------------------
+  ctx.fillStyle = "#e0f2fe";
+  ctx.shadowColor = "#67e8f9";
+  ctx.shadowBlur = 25;
+
+  ctx.beginPath();
+  ctx.moveTo(90, 140);
+  ctx.quadraticCurveTo(110, 125, 145, 120);
+  ctx.lineTo(165, 130);
+  ctx.quadraticCurveTo(140, 145, 90, 140);
+  ctx.closePath();
+  ctx.fill();
+
+  ctx.beginPath();
+  ctx.moveTo(690, 140);
+  ctx.quadraticCurveTo(670, 125, 635, 120);
+  ctx.lineTo(615, 130);
+  ctx.quadraticCurveTo(640, 145, 690, 140);
+  ctx.closePath();
+  ctx.fill();
+
+  ctx.shadowBlur = 0;
+
+  // ------------------- aerofólio traseiro -------------------
+  ctx.fillStyle = "#4c1d95";
+  ctx.beginPath();
+  ctx.moveTo(280, 110);
+  ctx.lineTo(500, 110);
+  ctx.lineTo(520, 80);
+  ctx.lineTo(260, 80);
+  ctx.closePath();
+  ctx.fill();
+  ctx.stroke();
+
+  // detalhe carbono no aerofólio
+  ctx.fillStyle = "#222";
+  ctx.fillRect(290, 85, 200, 18);
+
+  // ------------------- texto GT-R -------------------
+  ctx.font = "bold 38px Arial";
+  ctx.fillStyle = "#e9d5ff";
+  ctx.textAlign = "center";
+  ctx.fillText("GT-R", 390, 195);
+
+  ctx.font = "22px Arial";
+  ctx.fillStyle = "#c084fc";
+  ctx.fillText("NISSAN", 390, 230);
+}
+
+drawGTR();
+
+// animação leve de brilho (opcional)
+let time = 0;
+function animate() {
+  time += 0.015;
+  ctx.globalAlpha = 0.08 + Math.sin(time) * 0.04;
+  ctx.fillStyle = "#a855f7";
+  ctx.fillRect(0,0,canvas.width,canvas.height);
+  ctx.globalAlpha = 1;
+  drawGTR();
+  requestAnimationFrame(animate);
+}
+// animate();   ← descomente se quiser o brilho pulsante
+</script>
 </body>
 </html>
